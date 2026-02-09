@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>新年贺卡</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* 新增：让 body 高度撑满一屏 */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #fbeee6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+
+  /* 改：外层容器占满一屏，用 flex 把卡片居中，不再用 40px 外边距 */
+  .wrap {
+    width: 100%;
+    height: 100vh;              /* 一屏高 */
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;    /* 水平居中 */
+    align-items: center;        /* 垂直居中 */
+  }
+
+  /* 改：卡片最大不超过一屏 */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
+  /* 改：图片按比例缩放，既不超过宽也不超过高，整张图一次性展示 */
+  img {
+    display: block;
+    max-width: 100vw;
+    max-height: 100vh;
+    width: auto;
+    height: auto;
+  }
+
+  #letter {
+    display: none; /* 初始只显示封面 */
+  }
+
+  .btn-open {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: #c8141f;
+    color: #fff;
+    padding: 10px 26px;
+    border-radius: 999px;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,.25);
+  }
+
+  .fade {
+    animation: fadeIn .4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <!-- 封面图 -->
+    <div id="cover" class="fade">
+      <!-- 如果图片和 card.html 在同一个文件夹，直接写文件名即可 -->
+      <img src="cover.jpg" alt="新年贺卡封面">
+      <div class="btn-open" onclick="openLetter()">点击开启新年贺信</div>
+    </div>
+
+    <!-- 信内容图 -->
+    <div id="letter" class="fade">
+      <img src="letter.jpg" alt="新年贺信内容">
+    </div>
+  </div>
+</div>
+
+<script>
+  function openLetter() {
+    document.getElementById('cover').style.display = 'none';
+    document.getElementById('letter').style.display = 'block';
+  }
+
+  // 也可以整张封面点一下就切换
+  document.getElementById('cover').addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-open')) return; // 避免按钮重复触发
+    openLetter();
+  });
+</script>
+</body>
+</html>
